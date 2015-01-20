@@ -13,7 +13,9 @@ hash of directly specified users.
 Module Description
 -------------------
 
-Normally each user needs to be specified inside a puppet manifest. This module allows you to specify the users outside of puppet, so that the user setup can become variable.
+Normally each user needs to be specified inside a puppet manifest. This module
+allows you to specify the users outside of puppet, so that the user setup can
+become variable.
 
 Setup
 -----
@@ -32,9 +34,18 @@ Setup
                 comment: John Doe
                 managehome: true
                 ssh_authorized_keys:
-                        mykey:
-                               	type: 'ssh-rsa'
-                               	key:  'mykeydata=='
+                  mykey:
+                    type: 'ssh-rsa'
+                    key:  'mykeydata=='
+                ssh_keys:
+                  mysshkey1:
+                    type  : file
+                    path  : 'puppet:///keys/mysshkey'
+                  mysshkey1.pub
+                    type  : file
+                    path  : 'puppet:///keys/mysshkey.pub'
+                  mysshkey2:
+                    type  : private
 
 All parameters to the standard types 'user' and 'ssh_authorized_key' can be used.
 
@@ -59,16 +70,21 @@ The defined type *users* can be called with two arguments:
 
 Defaults to 'all'. Can be 'all', 'any' (sysonym for 'all'), or 'first'.
 
-If 'first' is used, then only the first match in your hiera hierarchy will be used. If you specify 'all' then all matching hashes will be be used. This corresponds directly to the respective 'hiera' and 'hiera_hash' function calls.
+If 'first' is used, then only the first match in your hiera hierarchy will be
+used. If you specify 'all' then all matching hashes will be be used. This
+corresponds directly to the respective 'hiera' and 'hiera_hash' function calls.
 
 ###`hash`
 
-Defaults to undef. Uses the given hash rather than the result of the hiera lookup.
+Defaults to undef. Uses the given hash rather than the result of the hiera
+lookup.
 
 Troubleshooting
 ---------------
 
-Before blaming me, check if your hiera configuration is working correctly. For instance, you can use this to check if puppet is seeing your hiera data correctly:
+Before blaming me, check if your hiera configuration is working correctly.
+For instance, you can use this to check if puppet is seeing your hiera data
+correctly:
 
         node /mynode/ {
                 $mytest = hiera("users_sysadmins", "not found")
@@ -79,6 +95,8 @@ Before blaming me, check if your hiera configuration is working correctly. For i
 Dependencies
 ------------
 
-* In puppet 3.0.0, hiera became a standard function call so it is included by default in your puppet installation. Before 3.0.0, you must install the hiera-puppet module.
+* In puppet 3.0.0, hiera became a standard function call so it is included by
+  default in your puppet installation. Before 3.0.0, you must install the
+  hiera-puppet module.
 
 * stdlib
