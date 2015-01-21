@@ -46,7 +46,6 @@ define users::ssh_authentication_keys($user, $hash, $keyname = $title) {
 
       $filedefaults = {
         content  => $filecontent,
-        loglevel => debug,
         }
       }
     default: {
